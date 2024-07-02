@@ -1,1 +1,38 @@
-hello world form vishal
+pipeline {
+    agent any
+    tools {
+        maven 'mvn-installer'
+    }
+    stages {
+        stage ('git checkout') {
+            steps {
+                
+                git credentialsId: 'git-nikhilesh', url: 'https://github.com/nikhileshsonu/jenkins.git'
+            }
+        }
+
+        stage ('validate') {
+            steps {
+                sh 'mvn validate'
+            }
+        }
+        
+        stage ('complie') {
+            steps {
+                sh 'mvn complie'
+            }
+        }
+
+        stage ('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage ('package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+}
